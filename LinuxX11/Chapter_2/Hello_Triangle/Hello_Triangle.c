@@ -154,9 +154,10 @@ int Init ( ESContext *esContext )
 void Draw ( ESContext *esContext )
 {
    UserData *userData = esContext->userData;
-   GLfloat vVertices[] = {  0.0f,  0.5f, 0.0f, 
-                           -0.5f, -0.5f, 0.0f,
-                            0.5f, -0.5f, 0.0f };
+
+   GLfloat vVerticesSmaller[] = {  0.0f,  0.0f, 0.0f,
+                                    0.0f,  0.0f, 0.0f,
+                                   0.5f, -0.5f, 0.0f };
       
    // Set the viewport
    glViewport ( 0, 0, esContext->width, esContext->height );
@@ -166,9 +167,34 @@ void Draw ( ESContext *esContext )
 
    // Use the program object
    glUseProgram ( userData->programObject );
+  
+   GLfloat* vVertices = malloc(sizeof(GLfloat)*9);
+ 
+   {
+   /*  vVertices = {  0.0f,  0.5f, 0.0f,
+                           -0.5f, -0.5f, 0.0f,
+                            0.5f, -0.5f, 0.0f };
+*/
+   vVertices[0]=0.0f;
+   vVertices[1]=0.5f;
+   vVertices[2]=0.0f;
 
-   // Load the vertex data
+   vVertices[3]=-0.5f;
+   vVertices[4]=-0.5f;
+   vVertices[5]=0.0f;
+   vVertices[6]=0.5f;
+   vVertices[7]=-0.5f;
+   vVertices[8]=0.0f;
+  // Load the vertex data
    glVertexAttribPointer ( 0, 3, GL_FLOAT, GL_FALSE, 0, vVertices );
+   memset(vVertices,0,sizeof(GL_FLOAT)*9);
+   free(vVertices);
+   }   
+  
+   GLfloat make[] = { 0.0f};
+   GLfloat my[] = {6.66f};
+   GLfloat day[] = {1.1f};
+
    glEnableVertexAttribArray ( 0 );
 
    glDrawArrays ( GL_TRIANGLES, 0, 3 );
